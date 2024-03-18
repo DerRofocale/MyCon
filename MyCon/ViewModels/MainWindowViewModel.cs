@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using MyCon.DBContext;
 using MyCon.Models;
 using MyCon.Views.Windows;
@@ -53,9 +48,8 @@ namespace MyCon.ViewModels
         {
             if (!string.IsNullOrEmpty(parameter))
             {
-                //Organizations = DbContext.Organizations.Include(x => x.Connections).Where(x => x.Name.ToLower().Contains(parameter.ToLower())).ToList();
-                Organizations = DbContext.Organizations.Include(x => x.Connections).Where(x => x.Name.ToLower().Contains(parameter.ToLower())).ToList();
-
+                /*TODO: Сделать ToLower();*/
+                Organizations = DbContext.Organizations.Include(x => x.Connections).Where(x => x.Name.Contains(parameter)).ToList();
             }
             else
             {
@@ -72,5 +66,17 @@ namespace MyCon.ViewModels
             new AddNewOrganizationWindow(DbContext).ShowDialog();
             FilterOrganizationsList(null);
         }
+    }
+
+    class CustomStringComparer : IEqualityComparer<string>
+    {
+        public bool Equals(string? x, string? y)
+        {
+            if (x is null || y is null) return false;
+            return x.ToLower() == y.ToLower();
+
+        }
+
+        public int GetHashCode(string obj) => obj.ToLower().GetHashCode();
     }
 }

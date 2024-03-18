@@ -1,27 +1,48 @@
-﻿<Window x:Class="MyCon.Views.Windows.AddNewOrganizationWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MyCon.Views.Windows"
-        mc:Ignorable="d"
-        xmlns:hc="https://handyorg.github.io/handycontrol" xmlns:viewmodels="clr-namespace:MyCon.ViewModels"
-        Title="AddNewOrganizationWindow" ResizeMode="NoResize" Height="250" Width="400">
+﻿<Window
+    x:Class="MyCon.Views.Windows.AddNewOrganizationWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:local="clr-namespace:MyCon.Views.Windows"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="clr-namespace:MyCon.ViewModels"
+    Title="AddNewOrganizationWindow"
+    Width="400"
+    Height="250"
+    Background="{StaticResource LightPrimaryBrush}"
+    ResizeMode="NoResize"
+    mc:Ignorable="d">
     <Grid>
         <!--<hc:UniformSpacingPanel Orientation="Vertical" Margin="15" VerticalAlignment="Center">
             <hc:TextBox hc:InfoElement.Placeholder="Название организации" hc:InfoElement.Necessary="True" hc:BorderElement.CornerRadius="4 4 0 0"/>
             <Button Content="Добавить изображение" hc:BorderElement.CornerRadius="0"/>
             <Button Content="Добавить" hc:BorderElement.CornerRadius="0 0 4 4" Style="{StaticResource ButtonPrimary}" HorizontalAlignment="Stretch"/>
         </hc:UniformSpacingPanel>-->
-        <hc:UniformSpacingPanel Orientation="Vertical" Margin="15" VerticalAlignment="Center">
-            <hc:TextBox x:Name="name" Text="" hc:InfoElement.Placeholder="Название организации" hc:InfoElement.Necessary="True" hc:BorderElement.CornerRadius="4 4 0 0"/>
-            <hc:ImageSelector Height="60" hc:BorderElement.CornerRadius="0"/>
-            <Button Content="Добавить" hc:BorderElement.CornerRadius="0 0 4 4" HorizontalAlignment="Stretch">
+        <hc:UniformSpacingPanel
+            Margin="15"
+            VerticalAlignment="Center"
+            Orientation="Vertical">
+            <hc:ImageSelector
+                Height="120"
+                hc:BorderElement.CornerRadius="4 4 0 0"
+                Stretch="Uniform" />
+            <hc:TextBox
+                x:Name="name"
+                hc:BorderElement.CornerRadius="0"
+                hc:InfoElement.Necessary="True"
+                hc:InfoElement.Placeholder="Название организации"
+                Text="" />
+
+            <Button
+                HorizontalAlignment="Stretch"
+                hc:BorderElement.CornerRadius="0 0 4 4"
+                Content="Добавить">
                 <Button.Style>
-                    <Style TargetType="Button" BasedOn="{StaticResource ButtonPrimary}">
+                    <Style BasedOn="{StaticResource ButtonPrimary}" TargetType="Button">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding ElementName=name, Path=Lenght}" Value="0">
-                                <Setter Property="IsEnabled" Value="False"/>
+                            <DataTrigger Binding="{Binding ElementName=name, Path=Text.Length}" Value="0">
+                                <Setter Property="IsEnabled" Value="False" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
