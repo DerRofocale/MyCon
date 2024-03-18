@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using MyCon.DBContext;
 using MyCon.Models;
+using MyCon.Views.Windows;
 using Prism.Commands;
 using Prism.Mvvm;
 
@@ -46,9 +47,9 @@ namespace MyCon.ViewModels
 
         private DelegateCommand<string?> _findOrganizationsBySearchQueryCommand;
         public DelegateCommand<string?> FindOrganizationsBySearchQueryCommand =>
-            _findOrganizationsBySearchQueryCommand ?? (_findOrganizationsBySearchQueryCommand = new DelegateCommand<string?>(ExecuteCommandName));
+            _findOrganizationsBySearchQueryCommand ?? (_findOrganizationsBySearchQueryCommand = new DelegateCommand<string?>(FilterOrganizationsList));
 
-        void ExecuteCommandName(string? parameter)
+        void FilterOrganizationsList(string? parameter)
         {
             if (!string.IsNullOrEmpty(parameter))
             {
@@ -60,6 +61,16 @@ namespace MyCon.ViewModels
             {
                 Organizations = DbContext.Organizations.Include(x => x.Connections).ToList();
             }
+        }
+
+        private DelegateCommand _addNewOrganizationCommand;
+        public DelegateCommand AddNewOrganizationCommand =>
+            _addNewOrganizationCommand ?? (_addNewOrganizationCommand = new DelegateCommand(ExecuteAddNewOrganizationCommand));
+
+        void ExecuteAddNewOrganizationCommand()
+        {
+            new AddNewOrganizationWindow(DbContext).ShowDialog();
+            FilterOrganizationsList(null);
         }
     }
 }
